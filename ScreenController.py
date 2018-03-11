@@ -17,6 +17,6 @@ class ScreenController:
 
         self.display.display("temp:110",1)
         self.display.display(ip,3)
-        self.display.display(str(time)[:5],4)
+        self.display.display(str(time)[:8],4)
 
 
