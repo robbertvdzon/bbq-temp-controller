@@ -1,4 +1,3 @@
-from display import *
 import RPi.GPIO as GPIO
 from time import *
 import time,threading
