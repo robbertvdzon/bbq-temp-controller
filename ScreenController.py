@@ -88,13 +88,7 @@ class ScreenController(InputListener, StateListener):
         self._drawScreenBbqTemp()
         self._drawScreenMeatTemp()
         self._drawScreenMenu()
-        # time = datetime.now().time()
-        # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        # s.connect(("8.8.8.8", 80))
-        # ip = s.getsockname()[0]
-        # s.close()
-
-
+        self._drawScreenAirflow()
 
     def _drawScreenBbqTemp(self):
         state = self._currentState
@@ -103,6 +97,13 @@ class ScreenController(InputListener, StateListener):
     def _drawScreenMeatTemp(self):
         state = self._currentState
         self._display.display("Vlees: "+str(state.meatTemp)+" ("+str(state.meatTempSet)+")", 2)
+
+    def _drawScreenAirflow(self):
+        state = self._currentState
+        fanStatus = "fan uit"
+        if state.fanOn:
+            fanStatus = "fan aan"
+        self._display.display("Klep "+str(state.valvePercOpen)+"%  "+fanStatus, 3)
 
     def _drawScreenMenu(self):
         state = self._currentState
