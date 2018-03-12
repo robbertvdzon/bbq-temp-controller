@@ -16,6 +16,8 @@ class AirflowController:
 
     def _calcAirflow(self):
         state = self.stateController.getState()
+        if state.forceCloseAirflow:
+            return 0,False
         return state.bbqTempSet,state.bbqTempSet>30
 
     def _updateState(self, valvePercOpen, fanOn):

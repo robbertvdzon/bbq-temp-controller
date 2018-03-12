@@ -37,6 +37,11 @@ class ScreenController(InputListener, StateListener):
             newState = copy.copy(oldState)
             newState.meatTempSet = newState.meatTempSet+1
             self._stateController.updateState(newState)
+        if (self._screenNr==3):
+            oldState = self._stateController.getState()
+            newState = copy.copy(oldState)
+            newState.forceCloseAirflow = not newState.forceCloseAirflow
+            self._stateController.updateState(newState)
 
     def buttonDown(self):
         if (self._screenNr==1):
@@ -49,10 +54,15 @@ class ScreenController(InputListener, StateListener):
             newState = copy.copy(oldState)
             newState.meatTempSet = newState.meatTempSet-1
             self._stateController.updateState(newState)
+        if (self._screenNr==3):
+            oldState = self._stateController.getState()
+            newState = copy.copy(oldState)
+            newState.forceCloseAirflow = not newState.forceCloseAirflow
+            self._stateController.updateState(newState)
 
     def buttonPressed(self):
         self._screenNr = self._screenNr+1
-        if (self._screenNr>3):
+        if (self._screenNr>4):
             self._screenNr = 0
         self.drawScreenMenu()
 
@@ -107,11 +117,17 @@ class ScreenController(InputListener, StateListener):
 
     def _drawScreenMenu(self):
         state = self._currentState
-        if (self._screenNr == 0 ):
-            self._display.display("Running", 4)
+        if (self._screenNr == 0 and state.forceCloseAirflow):
+            self._display.display("Running (dicht)", 4)
+        if (self._screenNr == 0 and not state.forceCloseAirflow):
+            self._display.display("Running (auto)", 4)
         if (self._screenNr == 1 ):
             self._display.display("Set bbq temp", 4)
         if (self._screenNr == 2 ):
             self._display.display("Set meat temp", 4)
-        if (self._screenNr == 3 ):
+        if (self._screenNr == 3 and state.forceCloseAirflow):
+            self._display.display("Toevoer dicht", 4)
+        if (self._screenNr == 3 and not state.forceCloseAirflow):
+            self._display.display("Toevoer automatisch", 4)
+        if (self._screenNr == 4 ):
             self._display.display(self._currentState.ipadress, 4)

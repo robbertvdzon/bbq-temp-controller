@@ -19,7 +19,6 @@ class StorageController():
 
     def onTimer(self):
         threading.Timer(10, self.onTimer).start()
-        print "store state"
         state = self._stateController.getState()
         with open('state.pkl', 'wb') as output:
             pickle.dump(state, output, pickle.HIGHEST_PROTOCOL)
