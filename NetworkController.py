@@ -4,7 +4,6 @@ class NetworkController:
     stateController = {}
 
     def __init__(self, stateController):
-        print "init"
         self.stateController = stateController
         threading.Timer(1, self.onTimer).start()
 

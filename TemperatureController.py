@@ -7,7 +7,6 @@ class TemperatureController:
     _adc = Adafruit_ADS1x15.ADS1015()
 
     def __init__(self, stateController):
-        print "init"
         self.stateController = stateController
         threading.Timer(1, self.onTimer).start()
 

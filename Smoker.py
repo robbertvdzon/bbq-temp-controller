@@ -4,11 +4,13 @@ from ScreenController import *
 from TemperatureController import *
 from StateController import *
 from NetworkController import *
+from StorageController import *
 import time
 
 display = Display()
 encoder = Encoder()
 stateController = StateController()
+storageController = StorageController(stateController)
 temperatureController = TemperatureController(stateController)
 networkController = NetworkController(stateController)
 screenController = ScreenController(display, encoder, stateController)
