@@ -13,8 +13,7 @@ screenController = ScreenController(display, encoder, stateController)
 
 try:
     while True:
-        time.sleep(0.5)
-        screenController.drawScreen()
+        time.sleep(1)
 except KeyboardInterrupt: # Ctrl-C to terminate the program
     GPIO.cleanup()
 
