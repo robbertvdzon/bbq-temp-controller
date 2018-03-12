@@ -2,6 +2,8 @@ import I2C_LCD_driver
 
 class Display:
 
+    _currentLines = ["","","","",""]
+
     def __init__(self):
         self.initDisplay()
 
@@ -14,16 +16,18 @@ class Display:
     def initDisplay(self):
         global mylcd
         mylcd = I2C_LCD_driver.lcd()
-        mylcd.lcd_display_string("Smoker test", 1)
         return
 
     def writeDisplay(self, text, line):
         global mylcd
-        mylcd.lcd_display_string(text, line)
+        oldText = self._currentLines[line]
+        if (not text == oldText):
+            mylcd.lcd_display_string(text.ljust(20), line)
+            self._currentLines[line] = text
 
     def clearDisplay(self):
         global mylcd
-        mylcd.lcd_display_string("                    ", 1)
-        mylcd.lcd_display_string("                    ", 2)
-        mylcd.lcd_display_string("                    ", 3)
-        mylcd.lcd_display_string("                    ", 4)
+        mylcd.lcd_display_string(" ".ljust(20), 1)
+        mylcd.lcd_display_string(" ".ljust(20), 2)
+        mylcd.lcd_display_string(" ".ljust(20), 3)
+        mylcd.lcd_display_string(" ".ljust(20), 4)

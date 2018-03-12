@@ -30,7 +30,7 @@ class Encoder:
     def initKnopSensor(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(6, GPIO.IN) # pull-ups are too weak, they introduce noise
-        GPIO.add_event_detect(6, GPIO.RISING, callback=self.knopPressedDetected, bouncetime=2) # bouncetime in mSec
+        GPIO.add_event_detect(6, GPIO.RISING, callback=self.knopPressedDetected, bouncetime=200) # bouncetime in mSec
         return
 
 
@@ -74,7 +74,7 @@ class Encoder:
         currentMillis = time.time()*1000.0
         diff = currentMillis-self.lastMillis
 
-        if (diff>2000):
+        if (diff>5*1000):
             self.sleepMode = True
             for listener in self.inputListeners:
                 listener.buttonTimeout()
