@@ -5,6 +5,7 @@ from TemperatureController import *
 from StateController import *
 from NetworkController import *
 from StorageController import *
+from AirflowController import *
 import time
 
 display = Display()
@@ -14,6 +15,7 @@ storageController = StorageController(stateController)
 temperatureController = TemperatureController(stateController)
 networkController = NetworkController(stateController)
 screenController = ScreenController(display, encoder, stateController)
+airflowController = AirflowController(stateController)
 
 try:
     while True:
