@@ -1,9 +1,11 @@
 from Display import *
+from Encoder import *
 from ScreenController import *
 import time
 
 display = Display()
-screenController = ScreenController(display)
+encoder = Encoder()
+screenController = ScreenController(display, encoder)
 
 try:
     while True:

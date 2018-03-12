@@ -1,12 +1,25 @@
 from datetime import datetime
-import socket
+from InputListener import *
 
-class ScreenController:
+class ScreenController(InputListener):
     display = {}
 
-    def __init__(self, display):
+    def __init__(self, display, encoder):
         self.display = display
         self.display.clearDisplay()
+        encoder.addInputListener(self)
+
+    def buttonTimeout(self):
+        print "timeout in screen"
+
+    def buttonUp(self):
+        print "up in screen"
+
+    def buttonDown(self):
+        print "down in screen"
+
+    def buttonPressed(self):
+        print "pressed in screen"
 
     def drawScreen(self):
         time = datetime.now().time()
