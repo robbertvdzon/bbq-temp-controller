@@ -1,11 +1,15 @@
 from Display import *
 from Encoder import *
 from ScreenController import *
+from TemperatureController import *
+from StateController import *
 import time
 
 display = Display()
 encoder = Encoder()
-screenController = ScreenController(display, encoder)
+stateController = StateController()
+temperatureController = TemperatureController(stateController)
+screenController = ScreenController(display, encoder, stateController)
 
 try:
     while True:
