@@ -82,7 +82,6 @@ class Motor(StateListener):
     def direction(self, direction):
         GPIO.output(17, direction)
 
-
     def stateChanged(self, state):
         if (state.airflowPerc<10):
             self.requestedState = self.STATE_CLOSED
@@ -90,7 +89,6 @@ class Motor(StateListener):
             self.requestedState = self.STATE_HALF
         if (state.airflowPerc>=20):
             self.requestedState = self.STATE_OPEN
-        pass
 
 
     # def initKlepSensor(self):
