@@ -1,10 +1,12 @@
-import threading, copy
+import threading, copy, sys
 from State import *
+from TemperatureConverter import *
 import Adafruit_ADS1x15
 
 class TemperatureController:
     stateController = {}
     _adc = Adafruit_ADS1x15.ADS1015()
+    temperatureConverter = TemperatureConverter()
 
     def __init__(self, stateController):
         self.stateController = stateController
@@ -12,8 +14,8 @@ class TemperatureController:
 
     def onTimer(self):
         threading.Timer(1, self.onTimer).start()
-        bbqTemp = self._adc.read_adc(3, gain=1)
-        meatTemp = self._adc.read_adc(2, gain=1)
+        bbqTemp = self.temperatureConverter.convertBbq(self._adc.read_adc(3, gain=1))
+        meatTemp = self.temperatureConverter.convertMeat(self._adc.read_adc(2, gain=1))
         self._updateState(bbqTemp, meatTemp)
 
 
