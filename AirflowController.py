@@ -11,20 +11,19 @@ class AirflowController:
 
     def onTimer(self):
         threading.Timer(1, self.onTimer).start()
-        (valvePercOpen, fanOn) = self._calcAirflow()
-        self._updateState(valvePercOpen, fanOn)
+        airflowPerc = self._calcAirflow()
+        self._updateState(airflowPerc)
 
     def _calcAirflow(self):
         state = self.stateController.getState()
         if state.forceCloseAirflow:
-            return 0,False
-        return state.bbqTempSet,state.bbqTempSet>30
+            return 0
+        return state.bbqTempSet
 
-    def _updateState(self, valvePercOpen, fanOn):
+    def _updateState(self, airflowPerc):
         # hou deze functie zo snel mogelijk, om te voorkomen dat we stae changes uit andere threads overschrijven
         oldState = self.stateController.getState()
         newState = copy.copy(oldState)
-        newState.valvePercOpen = valvePercOpen
-        newState.fanOn = fanOn
+        newState.airflowPerc = airflowPerc
         self.stateController.updateState(newState)
 

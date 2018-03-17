@@ -110,10 +110,7 @@ class ScreenController(InputListener, StateListener):
 
     def _drawScreenAirflow(self):
         state = self._currentState
-        fanStatus = "fan uit"
-        if state.fanOn:
-            fanStatus = "fan aan"
-        self._display.display("Klep "+str(state.valvePercOpen)+"%  "+fanStatus, 3)
+        self._display.display("Luchttoevoer "+str(state.airflowPerc)+"%", 3)
 
     def _drawScreenMenu(self):
         state = self._currentState

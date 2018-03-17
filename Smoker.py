@@ -6,6 +6,8 @@ from StateController import *
 from NetworkController import *
 from StorageController import *
 from AirflowController import *
+from Fan import *
+from Motor import *
 import time
 
 display = Display()
@@ -16,6 +18,8 @@ temperatureController = TemperatureController(stateController)
 networkController = NetworkController(stateController)
 screenController = ScreenController(display, encoder, stateController)
 airflowController = AirflowController(stateController)
+fan = Fan(stateController)
+motor = Motor(stateController)
 
 try:
     while True:
