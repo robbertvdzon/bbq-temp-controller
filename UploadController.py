@@ -10,8 +10,8 @@ class UploadController():
         threading.Timer(2, self.onTimer).start()
 
     def onTimer(self):
-        contents = urllib2.urlopen("http://www.karenvleugel.nl/smokerupload.php?temp="+str(self.currentBbqTemp)+"&fan="+str(self.airflowPerc)).read()
         threading.Timer(10, self.onTimer).start()
+        contents = urllib2.urlopen("http://www.karenvleugel.nl/smokerupload.php?temp="+str(self.currentBbqTemp)+"&fan="+str(self.airflowPerc)).read()
 
     def stateChanged(self, state):
         self.currentBbqTemp = state.bbqTemp
