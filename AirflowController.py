@@ -2,10 +2,13 @@ import threading, copy
 from State import *
 import Adafruit_ADS1x15
 from StateListener import *
+from AirflowCalculator import *
 
 class AirflowController(StateListener):
     stateController = {}
     lastForceCloseAirflow = False
+    airflowCalculator = AirflowCalculator()
+    lastBbqTemp = 0
 
     def __init__(self, stateController):
         self.stateController = stateController
@@ -21,7 +24,11 @@ class AirflowController(StateListener):
         state = self.stateController.getState()
         if state.forceCloseAirflow:
             return 0
-        return state.bbqTempSet
+        currentTemp = state.bbqTemp
+        lastBbqTemp = self.lastBbqTemp
+        self.lastBbqTemp = state.bbqTemp
+        return self.airflowCalculator.calcAirflow(state.bbqTempSet, currentTemp, lastBbqTemp)
+
 
     def stateChanged(self, state):
         if (self.lastForceCloseAirflow!=state.forceCloseAirflow):
