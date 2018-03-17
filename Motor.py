@@ -15,7 +15,7 @@ class Motor(StateListener):
     STATE_HALF = 1
     STATE_OPEN = 2
     lastState = STATE_CLOSED
-    requestedState = STATE_HALF # make sure that first time the valve is closed
+    requestedState = STATE_CLOSED # make sure that first time the valve is closed
     busy = False
 
     # KlepSensorPinOpen = 22
@@ -30,8 +30,13 @@ class Motor(StateListener):
         GPIO.setup(17, GPIO.OUT) # richting
         GPIO.output(12, GPIO.HIGH)
 
+        # close valve
+        self.busy = True
+        self.close(self.FULL_TIME)
+
         stateController.addStateListener(self)
         threading.Timer(1, self.onTimer).start()
+
 
     def onTimer(self):
         threading.Timer(1, self.onTimer).start()
