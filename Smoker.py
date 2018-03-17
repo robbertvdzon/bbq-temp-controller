@@ -9,6 +9,7 @@ from AirflowController import *
 from Fan import *
 from Motor import *
 import time
+from UploadController import *
 
 display = Display()
 encoder = Encoder()
@@ -20,6 +21,7 @@ screenController = ScreenController(display, encoder, stateController)
 airflowController = AirflowController(stateController)
 fan = Fan(stateController)
 motor = Motor(stateController)
+uploadController = UploadController(stateController)
 
 try:
     while True:
