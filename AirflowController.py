@@ -27,7 +27,7 @@ class AirflowController(StateListener):
         currentTemp = state.bbqTemp
         lastBbqTemp = self.lastBbqTemp
         self.lastBbqTemp = state.bbqTemp
-        return self.airflowCalculator.calcAirflow(state.bbqTempSet, currentTemp, lastBbqTemp)
+        return self.airflowCalculator.calcAirflow(state.bbqTempSet, currentTemp, lastBbqTemp, state.airflowPerc)
 
 
     def stateChanged(self, state):
