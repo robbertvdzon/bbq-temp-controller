@@ -20,7 +20,7 @@ class RegelingRecord:
 
 
 class AirflowCalculator():
-    DEMPING = 1.0
+    DEMPING = 0.4
 
     KOUDER5 = -100
     KOUDER4 = -50
