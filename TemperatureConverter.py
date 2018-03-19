@@ -56,7 +56,7 @@ class TemperatureConverter:
 
         tempDiffPerValue = tempDelta/float(valueDelta)
         temp = highTemp - tempDiffPerValue*(value-lowVal)
-        return int(temp)
+        return temp
 
     def getLowCalibration(self, value, calibrationList):
         for cal in calibrationList:

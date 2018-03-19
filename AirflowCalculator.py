@@ -7,8 +7,9 @@ class RegelingRecord:
     flow3 = 0
     flow4 = 0
     flow5 = 0
+    flow6 = 0
 
-    def __init__(self, verschilMin, verschilMax, flow1, flow2, flow3, flow4, flow5):
+    def __init__(self, verschilMin, verschilMax, flow1, flow2, flow3, flow4, flow5, flow6):
         self.verschilMin = verschilMin
         self.verschilMax = verschilMax
         self.flow1 = flow1
@@ -16,33 +17,38 @@ class RegelingRecord:
         self.flow3 = flow3
         self.flow4 = flow4
         self.flow5 = flow5
+        self.flow6 = flow6
 
 
 
 class AirflowCalculator():
-    DEMPING = 0.4
+    DEMPING = 0.5
 
     KOUDER5 = -100
     KOUDER4 = -50
     KOUDER3 = -20
     KOUDER2 = -10
-    KOUDER1 = -5
+    KOUDER1 = -6
     ZELFDE = 0
-    WARMER1 = 5
+    WARMER1 = 6
     WARMER2 = 10
     WARMER3 = 20
     WARMER4 = 50
     WARMER5 = 100
 
+    MIN_AIRFLOW = 0
+    MAX_AIRFLOW = 100
+
 
     regelingen = [
-        RegelingRecord(-999,-20, WARMER5,WARMER5,WARMER5,WARMER5,ZELFDE),
-        RegelingRecord(-20,-10,  WARMER5,WARMER3,WARMER2,ZELFDE,KOUDER2),
-        RegelingRecord(-10,-5,   WARMER4,WARMER2,WARMER1,ZELFDE,KOUDER3),
-        RegelingRecord(-5,5,     WARMER3,WARMER1,ZELFDE,KOUDER1,KOUDER3),
-        RegelingRecord(5,10,     WARMER2,ZELFDE,KOUDER1,KOUDER2,KOUDER4),
-        RegelingRecord(10,20,    ZELFDE,KOUDER1,KOUDER2,KOUDER3,KOUDER4),
-        RegelingRecord(20,999,   ZELFDE,KOUDER2,KOUDER3,KOUDER4,KOUDER5)
+        RegelingRecord(-999,-20, WARMER5,WARMER2,WARMER2,ZELFDE,KOUDER2,KOUDER2),
+        RegelingRecord(-20,-10,  WARMER3,WARMER2,WARMER2,ZELFDE,KOUDER2,KOUDER3),
+        RegelingRecord(-10,-5,   WARMER3,WARMER2,WARMER2,ZELFDE,KOUDER3,KOUDER4),
+        RegelingRecord(-5,0,     WARMER2,WARMER2,WARMER1,ZELFDE, KOUDER3,KOUDER4),
+        RegelingRecord(0,5,      WARMER2,WARMER1,ZELFDE,KOUDER3, KOUDER4,KOUDER4),
+        RegelingRecord(5,10,     WARMER3,WARMER1,ZELFDE,KOUDER4,KOUDER5,KOUDER5),
+        RegelingRecord(10,20,    ZELFDE,ZELFDE,KOUDER3,KOUDER4,KOUDER5,KOUDER5),
+        RegelingRecord(20,999,   KOUDER4,KOUDER4,KOUDER4,KOUDER4,KOUDER4,KOUDER4)
     ]
 
     def __init__(self):
@@ -52,23 +58,25 @@ class AirflowCalculator():
         tempVerschil = currentTemp - bbqTempSet
         tempStijging = currentTemp - lastTemp
         regelingRecord = self.findRecord(tempVerschil)
-        if tempStijging<-5:
+        if tempStijging<-1.5:
             return self.calcFlow(currentAirflow,regelingRecord.flow1)
-        if tempStijging>=-5 and tempStijging<-1:
+        if tempStijging>=-1.5 and tempStijging<-0.7:
             return self.calcFlow(currentAirflow,regelingRecord.flow2)
-        if tempStijging>=-1 and tempStijging<1:
+        if tempStijging>=-0.7 and tempStijging<0:
             return self.calcFlow(currentAirflow,regelingRecord.flow3)
-        if tempStijging>=1 and tempStijging<5:
+        if tempStijging>=0 and tempStijging<0.7:
             return self.calcFlow(currentAirflow,regelingRecord.flow4)
-        if tempStijging>=5:
+        if tempStijging>=0.7 and tempStijging<1.5:
             return self.calcFlow(currentAirflow,regelingRecord.flow5)
+        if tempStijging>=1.5:
+            return self.calcFlow(currentAirflow,regelingRecord.flow6)
 
     def calcFlow(self, currentAirflow, addedFlow):
         newFlow = int(currentAirflow+addedFlow*self.DEMPING)
-        if (newFlow>100):
-            newFlow = 100
-        if (newFlow<0):
-            newFlow = 0
+        if (newFlow>self.MAX_AIRFLOW):
+            newFlow = self.MAX_AIRFLOW
+        if (newFlow<self.MIN_AIRFLOW):
+            newFlow = self.MIN_AIRFLOW
         return int(newFlow)
 
 

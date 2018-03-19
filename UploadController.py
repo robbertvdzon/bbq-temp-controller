@@ -2,9 +2,9 @@ import threading
 import urllib2
 
 class UploadController():
-    currentBbqTemp = 0
-    airflowPerc = 0
-    bbqTempSet = 0
+    currentBbqTemp = ""
+    airflowPerc = ""
+    bbqTempSet = ""
 
     def __init__(self, stateController):
         stateController.addStateListener(self)
@@ -12,10 +12,10 @@ class UploadController():
 
     def onTimer(self):
         threading.Timer(10, self.onTimer).start()
-        contents = urllib2.urlopen("http://www.karenvleugel.nl/smokerupload.php?temp="+str(self.currentBbqTemp)+"&bbqSet="+str(self.bbqTempSet)+"&fan="+str(self.airflowPerc)).read()
+        contents = urllib2.urlopen("http://www.karenvleugel.nl/smokerupload.php?temp="+self.currentBbqTemp+"&bbqSet="+self.bbqTempSet+"&fan="+self.airflowPerc).read()
 
     def stateChanged(self, state):
-        self.currentBbqTemp = state.bbqTemp
-        self.airflowPerc = state.airflowPerc
-        self.bbqTempSet = state.bbqTempSet
+        self.currentBbqTemp = "{0:.2f}".format(state.bbqTemp)
+        self.airflowPerc = str(state.airflowPerc)
+        self.bbqTempSet = str(state.bbqTempSet)
 
