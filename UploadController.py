@@ -3,6 +3,7 @@ import urllib2
 
 class UploadController():
     currentBbqTemp = ""
+    currentMeatTemp = ""
     airflowPerc = ""
     bbqTempSet = ""
 
@@ -12,10 +13,11 @@ class UploadController():
 
     def onTimer(self):
         threading.Timer(10, self.onTimer).start()
-        contents = urllib2.urlopen("http://www.karenvleugel.nl/smokerupload.php?temp="+self.currentBbqTemp+"&bbqSet="+self.bbqTempSet+"&fan="+self.airflowPerc).read()
+        contents = urllib2.urlopen("http://www.karenvleugel.nl/smokerupload.php?temp="+self.currentBbqTemp+"&meat="+self.currentMeatTemp+"&bbqSet="+self.bbqTempSet+"&fan="+self.airflowPerc).read()
 
     def stateChanged(self, state):
         self.currentBbqTemp = "{0:.2f}".format(state.bbqTemp)
         self.airflowPerc = str(state.airflowPerc)
         self.bbqTempSet = str(state.bbqTempSet)
+        self.currentMeatTemp = "{0:.2f}".format(state.meatTemp)
 

@@ -7,6 +7,7 @@ from AirflowCalculator import *
 class AirflowController(StateListener):
     stateController = {}
     lastForceCloseAirflow = False
+    lastForceFullAirflow = False
     airflowCalculator = AirflowCalculator()
     lastBbqTemp = 0
 
@@ -22,6 +23,8 @@ class AirflowController(StateListener):
 
     def _calcAirflow(self):
         state = self.stateController.getState()
+        if state.forceFullAirflow:
+            return 100
         if state.forceCloseAirflow:
             return 0
         currentTemp = state.bbqTemp
@@ -33,7 +36,10 @@ class AirflowController(StateListener):
     def stateChanged(self, state):
         if (self.lastForceCloseAirflow!=state.forceCloseAirflow):
             self.onTimer()
+        if (self.lastForceFullAirflow!=state.forceFullAirflow):
+            self.onTimer()
         self.lastForceCloseAirflow = state.forceCloseAirflow
+        self.lastForceFullAirflow = state.forceFullAirflow
 
 
     def _updateState(self, airflowPerc):

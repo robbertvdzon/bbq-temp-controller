@@ -28,12 +28,33 @@ class TemperatureConverter:
          ]
 
     listOfCalibrationValuesMeat = [
-        (1620,100),
-        (30,300)
+        (1680,0),
+        (1495,44),
+        (1455,51),
+        (1415,56),
+        (1400,58),
+        (1383,60),
+        (1360,63),
+        (1340,65),
+        (1317,68),
+        (1300,70),
+        (1286,72),
+        (1264,74),
+        (1240,76),
+        (1212,79),
+        (1192,81),
+        (1174,83),
+        (1152,85),
+        (1134,87),
+        (1040,96),
+        (1024,97),
+        (990,100),
+        (0,200)
     ]
 
     def convertBbq(self, value):
         return self._convert(value, self.listOfCalibrationValuesBbq)
+
 
     def convertMeat(self, value):
         return self._convert(value, self.listOfCalibrationValuesMeat)
@@ -46,8 +67,6 @@ class TemperatureConverter:
         highVal = highCalibrationValue[0]
         highTemp = lowCalibrationValue[1]
         lowTemp = highCalibrationValue[1]
-
-
         if (value==lowVal) : return lowTemp
         if (value==highVal) : return highTemp
 

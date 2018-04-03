@@ -42,6 +42,11 @@ class ScreenController(InputListener, StateListener):
             newState = copy.copy(oldState)
             newState.forceCloseAirflow = not newState.forceCloseAirflow
             self._stateController.updateState(newState)
+        if (self._screenNr==4):
+            oldState = self._stateController.getState()
+            newState = copy.copy(oldState)
+            newState.forceFullAirflow = not newState.forceFullAirflow
+            self._stateController.updateState(newState)
 
     def buttonDown(self):
         if (self._screenNr==1):
@@ -59,10 +64,15 @@ class ScreenController(InputListener, StateListener):
             newState = copy.copy(oldState)
             newState.forceCloseAirflow = not newState.forceCloseAirflow
             self._stateController.updateState(newState)
+        if (self._screenNr==4):
+            oldState = self._stateController.getState()
+            newState = copy.copy(oldState)
+            newState.forceFullAirflow = not newState.forceFullAirflow
+            self._stateController.updateState(newState)
 
     def buttonPressed(self):
         self._screenNr = self._screenNr+1
-        if (self._screenNr>4):
+        if (self._screenNr>5):
             self._screenNr = 0
         self.drawScreenMenu()
 
@@ -126,5 +136,9 @@ class ScreenController(InputListener, StateListener):
             self._display.display("Toevoer dicht", 4)
         if (self._screenNr == 3 and not state.forceCloseAirflow):
             self._display.display("Toevoer automatisch", 4)
-        if (self._screenNr == 4 ):
+        if (self._screenNr == 4 and state.forceCloseAirflow):
+            self._display.display("Toevoer 100%", 4)
+        if (self._screenNr == 4 and not state.forceFullAirflow):
+            self._display.display("Toevoer automatisch", 4)
+        if (self._screenNr == 5 ):
             self._display.display(self._currentState.ipadress, 4)
