@@ -59,26 +59,35 @@ class AirflowCalculator():
         tempStijging = currentTemp - lastTemp
         regelingRecord = self.findRecord(tempVerschil)
         if tempStijging<-1.5:
-            return self.calcFlow(currentAirflow,regelingRecord.flow1)
+            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow1)
         if tempStijging>=-1.5 and tempStijging<-0.7:
-            return self.calcFlow(currentAirflow,regelingRecord.flow2)
+            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow2)
         if tempStijging>=-0.7 and tempStijging<0:
-            return self.calcFlow(currentAirflow,regelingRecord.flow3)
+            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow3)
         if tempStijging>=0 and tempStijging<0.7:
-            return self.calcFlow(currentAirflow,regelingRecord.flow4)
+            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow4)
         if tempStijging>=0.7 and tempStijging<1.5:
-            return self.calcFlow(currentAirflow,regelingRecord.flow5)
+            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow5)
         if tempStijging>=1.5:
-            return self.calcFlow(currentAirflow,regelingRecord.flow6)
+            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow6)
 
-    def calcFlow(self, currentAirflow, addedFlow):
-        newFlow = int(currentAirflow+addedFlow*self.DEMPING)
+    def calcFlow(self, currentAirflow, tempVerschil, addedFlow):
+        extraDemping = self.calcExtraDemping(tempVerschil, currentAirflow)
+
+        newFlow = int(currentAirflow+addedFlow*self.DEMPING*extraDemping)
         if (newFlow>self.MAX_AIRFLOW):
             newFlow = self.MAX_AIRFLOW
         if (newFlow<self.MIN_AIRFLOW):
             newFlow = self.MIN_AIRFLOW
         return int(newFlow)
 
+    def calcExtraDemping(self, tempVerschil, currentAirflow):
+        # als de temp minder dan 10 graden te laag is, en de airflow al 40% is, dan een extra demping van 0.25
+        extraDemping = 1
+        if (tempVerschil>=-10 and tempVerschil<=0):
+            if (currentAirflow>40):
+                extraDemping = 0.25
+        return extraDemping
 
     def findRecord(self, tempVerschil):
         for record in self.regelingen:
