@@ -83,11 +83,11 @@ class Motor(StateListener):
         GPIO.output(17, direction)
 
     def stateChanged(self, state):
-        if (state.airflowPerc<10):
+        if (state.airflowPerc<=0):
             self.requestedState = self.STATE_CLOSED
-        if (state.airflowPerc>=10 and state.airflowPerc<20):
+        if (state.airflowPerc>0 and state.airflowPerc<50):
             self.requestedState = self.STATE_HALF
-        if (state.airflowPerc>=20):
+        if (state.airflowPerc>=50):
             self.requestedState = self.STATE_OPEN
 
 

@@ -17,7 +17,7 @@ class AirflowController(StateListener):
         threading.Timer(1, self.onTimer).start()
 
     def onTimer(self):
-        threading.Timer(20, self.onTimer).start()
+        threading.Timer(30, self.onTimer).start()
         airflowPerc = self._calcAirflow()
         self._updateState(airflowPerc)
 
