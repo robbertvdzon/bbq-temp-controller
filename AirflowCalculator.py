@@ -22,19 +22,19 @@ class RegelingRecord:
 
 
 class AirflowCalculator():
-    DEMPING = 0.2
+    DEMPING = 1
 
-    KOUDER5 = -100
-    KOUDER4 = -50
-    KOUDER3 = -20
-    KOUDER2 = -10
-    KOUDER1 = -6
+    KOUDER5 = -20
+    KOUDER4 = -10
+    KOUDER3 = -4
+    KOUDER2 = -2
+    KOUDER1 = -1
     ZELFDE = 0
-    WARMER1 = 6
-    WARMER2 = 10
-    WARMER3 = 20
-    WARMER4 = 50
-    WARMER5 = 100
+    WARMER1 = 1
+    WARMER2 = 2
+    WARMER3 = 4
+    WARMER4 = 10
+    WARMER5 = 20
 
     MIN_AIRFLOW = 0
     MAX_AIRFLOW = 100
