@@ -53,21 +53,22 @@ class AirflowCalculator():
         pass
 
     def calcAirflow(self, bbqTempSet, currentTemp, lastTemp, currentAirflow):
-        tempVerschil = currentTemp - bbqTempSet
-        tempStijging = currentTemp - lastTemp
-        regelingRecord = self.findRecord(tempVerschil)
-        if tempStijging<-1.5:
-            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow1)
-        if tempStijging>=-1.5 and tempStijging<-0.7:
-            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow2)
-        if tempStijging>=-0.7 and tempStijging<0:
-            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow3)
-        if tempStijging>=0 and tempStijging<0.7:
-            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow4)
-        if tempStijging>=0.7 and tempStijging<1.5:
-            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow5)
-        if tempStijging>=1.5:
-            return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow6)
+        return bbqTempSet # TIJDELIJK: airflow zelfde als temp set
+        # tempVerschil = currentTemp - bbqTempSet
+        # tempStijging = currentTemp - lastTemp
+        # regelingRecord = self.findRecord(tempVerschil)
+        # if tempStijging<-1.5:
+        #     return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow1)
+        # if tempStijging>=-1.5 and tempStijging<-0.7:
+        #     return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow2)
+        # if tempStijging>=-0.7 and tempStijging<0:
+        #     return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow3)
+        # if tempStijging>=0 and tempStijging<0.7:
+        #     return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow4)
+        # if tempStijging>=0.7 and tempStijging<1.5:
+        #     return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow5)
+        # if tempStijging>=1.5:
+        #     return self.calcFlow(currentAirflow,tempVerschil, regelingRecord.flow6)
 
     def calcFlow(self, currentAirflow, tempVerschil, addedFlow):
         newFlow = int(currentAirflow+addedFlow)
