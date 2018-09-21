@@ -13,7 +13,7 @@ class UploadController():
 
     def onTimer(self):
         threading.Timer(10, self.onTimer).start()
-        contents = urllib2.urlopen("https://7t685ht6u8.execute-api.eu-central-1.amazonaws.com/api/add/"+self.currentBbqTemp+"/"+self.currentMeatTemp+"/"+self.bbqTempSet+"/"+self.airflowPerc).read()
+        contents = urllib2.urlopen("https://mysmoker.api.vdzon.com/add/"+self.currentBbqTemp+"/"+self.currentMeatTemp+"/"+self.bbqTempSet+"/"+self.airflowPerc).read()
 
     def stateChanged(self, state):
         self.currentBbqTemp = "{0:.2f}".format(state.bbqTemp)
