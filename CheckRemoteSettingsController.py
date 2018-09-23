@@ -11,7 +11,7 @@ class CheckRemoteSettingsController():
 
     def onTimer(self):
         threading.Timer(10, self.onTimer).start()
-        remoteTemp = urllib2.urlopen("http://www.karenvleugel.nl/get_and_clear_temp.php").read()
+        remoteTemp = urllib2.urlopen("https://mysmoker.api.vdzon.com/gettemp").read()
         if (remoteTemp!='-1'):
             newTempSet = int(remoteTemp)
             oldState = self._stateController.getState()
