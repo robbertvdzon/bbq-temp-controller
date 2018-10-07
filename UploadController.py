@@ -16,8 +16,6 @@ class UploadController():
         data = urllib.urlencode({'bbqtemp' :self.currentBbqTemp,'meattemp'  : self.currentMeatTemp, 'bbqtempset' : self.bbqTempSet, 'fan' : self.airflowPerc})
         contents = urllib2.urlopen("https://mysmoker.api.vdzon.com/add/", data).read()
 
-content = urllib2.urlopen(url=url, data=data).read()
-
     def stateChanged(self, state):
         self.currentBbqTemp = "{0:.2f}".format(state.bbqTemp)
         self.airflowPerc = str(state.airflowPerc)
