@@ -13,7 +13,7 @@ class UploadController():
 
     def onTimer(self):
         threading.Timer(10, self.onTimer).start()
-        data = urllib.urlencode({'bbqtemp' :self.currentBbqTemp,'meattemp'  : self.currentMeatTemp, 'bbqtempset' : self.bbqTempSet, 'fan' : self.airflowPerc})
+        data = "{'bbqtemp' :"+self.currentBbqTemp+" ,'meattemp'  : "+self.currentMeatTemp+", 'bbqtempset' : "+self.bbqTempSet+", 'fan' : "+self.airflowPerc+"}"
         contents = urllib2.urlopen("https://mysmoker.api.vdzon.com/add/", data).read()
 
     def stateChanged(self, state):
