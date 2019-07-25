@@ -41,10 +41,10 @@ class AirflowController(StateListener):
         return result
 
     def stateChanged(self, state):
-        if (self.lastForceCloseAirflow!=state.forceCloseAirflow):
-            self.onTimer()
-        if (self.lastForceFullAirflow!=state.forceFullAirflow):
-            self.onTimer()
+       # if (self.lastForceCloseAirflow!=state.forceCloseAirflow):
+       #     self.onTimer()
+       # if (self.lastForceFullAirflow!=state.forceFullAirflow):
+       #     self.onTimer()
         self.lastForceCloseAirflow = state.forceCloseAirflow
         self.lastForceFullAirflow = state.forceFullAirflow
 
