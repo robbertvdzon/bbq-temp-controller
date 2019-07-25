@@ -31,7 +31,7 @@ class AirflowController(StateListener):
         lastBbqTemp = self.lastBbqTemp
         self.lastBbqTemp = state.bbqTemp
         result = self.airflowCalculator.calcAirflow(state.bbqTempSet, currentTemp, lastBbqTemp, state.airflowPerc)
-        print "set: %s  current:%s  last: %s currentflow: %s newflow: %s" % (tate.bbqTempSet, currentTemp, lastBbqTemp, state.airflowPerc, result)
+        print "set: %s  current:%s  last: %s currentflow: %s newflow: %s" % (state.bbqTempSet, currentTemp, lastBbqTemp, state.airflowPerc, result)
         return result
 
     def stateChanged(self, state):
