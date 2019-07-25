@@ -18,7 +18,7 @@ class AirflowController(StateListener):
         print "%s create airflow controller" %  (datetime.datetime.now())
         #threading.Timer(1, self.onTimer).start()
 
-    def onTimer(self):
+    def onAirflowTimer(self):
         print "%s on timer: init" %  (datetime.datetime.now())
         threading.Timer(30, self.onTimer).start()
         print "%s on timer: timer set" %  (datetime.datetime.now())
