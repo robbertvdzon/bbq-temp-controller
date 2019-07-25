@@ -11,12 +11,18 @@ class CheckRemoteSettingsController():
 
     def onTimer(self):
         threading.Timer(10, self.onTimer).start()
-        remoteTemp = urllib2.urlopen("https://mysmoker.api.vdzon.com/gettemp").read()
-        if (remoteTemp!='-1'):
-            newTempSet = int(remoteTemp)
-            oldState = self._stateController.getState()
-            newState = copy.copy(oldState)
-            newState.bbqTempSet = newTempSet
-            self._stateController.updateState(newState)
+
+        try:
+            remoteTemp = urllib2.urlopen("https://mysmoker.api.vdzon.com/gettemp").read()
+            if (remoteTemp!='-1'):
+                newTempSet = int(remoteTemp)
+                oldState = self._stateController.getState()
+                newState = copy.copy(oldState)
+                newState.bbqTempSet = newTempSet
+                self._stateController.updateState(newState)
+        except:
+            print("Error during remote call")
+
+
 
 
