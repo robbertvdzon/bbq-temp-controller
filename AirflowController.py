@@ -15,12 +15,17 @@ class AirflowController(StateListener):
     def __init__(self, stateController):
         self.stateController = stateController
         stateController.addStateListener(self)
+        print "%s create airflow controller" %  (datetime.datetime.now())
         threading.Timer(1, self.onTimer).start()
 
     def onTimer(self):
+        print "%s on timer: init" %  (datetime.datetime.now())
         threading.Timer(30, self.onTimer).start()
+        print "%s on timer: timer set" %  (datetime.datetime.now())
         airflowPerc = self._calcAirflow()
+        print "%s on timer: airflow calculated" %  (datetime.datetime.now())
         self._updateState(airflowPerc)
+        print "%s on timer: state updated" %  (datetime.datetime.now())
 
     def _calcAirflow(self):
         state = self.stateController.getState()
